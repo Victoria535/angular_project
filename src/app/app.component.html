@@ -1,0 +1,171 @@
+            <nav class="navbar navbar-light bg-light">
+              <div class="burger" (click)="open()">
+                  <span></span>
+              </div>
+              
+              <form class="form-inline">
+                
+                <input class="form-control mr-sm-2" id="searchField" type="search" placeholder="Search" value="">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="searchEmployee()">Поиск</button>
+              </form>
+            </nav>
+
+
+<div id="menu">
+  <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+       
+       <ul class="nav sidebar-nav">
+          <li *ngFor="let d of departments">
+            <div *ngIf="child(departments)">
+              <a href="#" (click)="loadEmployees(d)">{{d.name}}
+                <i class="b fa fa-pencil" (click)="editDepartment(d)"></i>
+                <i class="b fa fa-times" (click)="deleteDepartment(d)"></i>
+              </a>
+            </div>
+
+            <!-- <div *ngIf="child(departments)">
+              <ul>
+              <a href="#" (click)="loadEmployees(d)" (click)="loadDepartment(d)">{{d.name}}</a>
+            </ul>
+            </div> -->
+
+        
+            <!-- <ng-template #dropdown>
+              <ul>
+               <a href="#" (click)="loadEmployees(d)" (click)="loadDepartment(d)">{{d.name}}</a>
+               </ul>
+             </ng-template>
+  -->
+          </li>
+           <span class="close" (click)="closeMenu()"></span>
+           <i class="but fa fa-plus" (click)="addDepartment()"></i>
+        </ul>       
+   </nav>
+</div>
+         
+
+      <!-- <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+      <li class="dropdown-header">Dropdown heading</li>
+      <li><a href="#">Asction</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li><a href="#">Separated link</a></li>
+      <li><a href="#">One more separated link</a></li>
+    </ul>
+  </li> -->
+
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Номер телефона</th>
+        <th scope="col">Адрес</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor ="let e of employees">
+     
+     <td>{{e.employeeID}}</td>
+      <td>{{e.firstName}}</td>
+      <td>{{e.lastName}}</td>
+      <td>{{e.phoneNumber}}</td>  
+      <td>{{e.address}}</td>    
+
+      <td><i class="fa fa-pencil" (click)="editEmployee(e)"></i></td>
+      <td><i class="fa fa-times" (click)="deleteEmployee(e)"></i></td>
+
+      </tr>
+     </tbody>
+     <i class="fa fa-plus" (click)=add()></i>
+
+  </table> 
+
+  <!-- Modal Employee -->
+  <div class="modal" id="modalDialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Сотрудник</h5>
+          <button type="button" class="close" (click)="closeModalDialog()" data-dismiss="modal" aria-label="Close">   
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <td>
+            <input hidden="true" type="number" [(ngModel)]="employee.employeeID" class="form-control" />
+        </td>
+        
+          <td>
+            <label>Имя</label>
+            <input type="text" [(ngModel)]="employee.firstName" class="form-control" />
+        </td>
+        <td>
+          <label>Фамилия</label>
+            <input type="text" [(ngModel)]="employee.lastName" class="form-control" />
+        </td>
+        <td>
+          <label>Номер</label>
+            <input type="text" [(ngModel)]="employee.phoneNumber" class="form-control" />
+        </td>
+        <td>
+          <label>Адрес</label>
+          <input type="text" [(ngModel)]="employee.address" class="form-control" />
+      </td>
+      <td>
+        <label>Отдел</label>
+        <input type="text" [(ngModel)]="employee.departmentID" class="form-control" />
+    </td>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDialog()">Закрыть</button>
+          <button type="button" class="btn btn-primary" (click)=saveEmployee()>Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+  <!-- Modal Department -->
+  <div class="modal" id="modalDialogDepartment" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Отдел</h5>
+          <button type="button" class="close" (click)="closeModalDialogDepartment()" data-dismiss="modal" aria-label="Close">   
+          </button>
+        </div>
+
+        <div class="modal-body" >
+          <td>
+            <!-- <input hidden="true" type="number" [(ngModel)]="department.departmentId" class="form-control" /> -->
+        </td>
+        
+          <td>
+            <label>Имя</label>
+            <input type="text" [(ngModel)]="department.name" class="form-control" />
+        </td>
+        <td>
+          
+      <td>
+        <label>Подотдел</label>
+        <input type="text" [(ngModel)]="department.parentID" class="form-control" />
+    </td>
+  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModalDialogDepartment()">Закрыть</button>
+          <button type="button" class="btn btn-primary" (click)="saveDepartment()">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
