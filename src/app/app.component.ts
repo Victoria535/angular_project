@@ -129,8 +129,7 @@ deleteEmployee(e: Employee){
 
 searchEmployee() {
   var textSearch = document.getElementById("searchField")['value'];
-  console.log(textSearch)
-  this.dataService.searchEmp(textSearch).subscribe(data => console.log("ok"));;
+  this.dataService.searchEmp(textSearch).subscribe((data: Employee[]) => this.employees = data);
 }
 
 add() {
@@ -145,7 +144,6 @@ addDepartment() {
 child(departments :Department){
   for(var i = 0; i < this.departments.length; i++){
   if(departments[i].parentID !== null){
-    // console.log(departments[i]);
     return departments[i];
   }
   else{
