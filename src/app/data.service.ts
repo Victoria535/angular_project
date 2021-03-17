@@ -14,7 +14,7 @@ export class DataService {
     }
 
     searchEmp(textSearch: string){
-        return this.http.request('get', this.urlEmployee + '/findemployee/find/' + textSearch);
+        return this.http.get(this.urlEmployee + '/findemployee/' + textSearch);
     }
 
     getDepartaments() {
